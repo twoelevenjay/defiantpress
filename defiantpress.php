@@ -21,9 +21,13 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 /**
- * Currently plugin version.
+ * Current plugin version.
  */
 define( 'DEFIANTPRESS_VERSION', time() /*'1.0.0'*/ );
+/**
+ * Current plugin name.
+ */
+define( 'DEFIANTPRESS_NAME', 'defiantpress' );
 /**
  * Plugin directory URL.
  */
@@ -37,14 +41,14 @@ define( 'DEFIANTPRESS_PATH', plugin_dir_path( __FILE__ ) );
  * Set transient used for conditionally showing welcome tutorial on plugin activation.
  */
 function add_welcome_transient() {
-	set_transient( 'defiant_welcome_message', 'unviewed' );
+	set_transient( 'defiantpress_welcome_message', 'unviewed' );
 }
 
 /**
  * Remove transient used for conditionally showing welcome tutorial on plugin deactivation.
  */
 function remove_welcome_transient() {
-	delete_transient( 'defiant_welcome_message' );
+	delete_transient( 'defiantpress_welcome_message' );
 }
 
 register_activation_hook( __FILE__, 'add_welcome_transient' );
