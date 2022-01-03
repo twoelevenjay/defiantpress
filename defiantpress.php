@@ -58,10 +58,9 @@ register_deactivation_hook( __FILE__, 'remove_welcome_transient' );
 /**
  * Run all dependancies and the main plugin class.
  */
-require DEFIANTPRESS_PATH . 'dependencies/simple_html_dom.php';
+require DEFIANTPRESS_PATH . 'dependencies/Goutte/vendor/autoload.php';
+require DEFIANTPRESS_PATH . 'dependencies/Goutte/Goutte/Client.php';
 require DEFIANTPRESS_PATH . 'includes/class-defiantpress.php';
-
-use DefiantPress;
 
 /**
  * Begins execution of the plugin.
