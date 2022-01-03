@@ -26,8 +26,7 @@ class DefiantPress {
 	}
 
 	/**
-	 * Register all of the hooks related to the public-facing functionality
-	 * of the plugin.
+	 * Get the team members from the https://www.defiant.com/team/ page.
 	 *
 	 * @since    1.0.0
 	 * @access   private
