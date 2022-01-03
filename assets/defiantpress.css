@@ -1,0 +1,23 @@
+#defiantpress {
+	float      : right;
+	padding    : 5px 10px;
+	margin     : 0;
+	font-size  : 12px;
+	line-height: 1.6666;
+}
+
+#defiantpress a {
+	text-decoration: none;
+}
+
+#defiantpress-modal {
+	max-width: 100%;
+	width    : 700px;
+	height   : 700px;
+}
+
+#defiantpress-modal img {
+	max-width: 100%;
+	width    : 100%;
+	height   : auto;
+}

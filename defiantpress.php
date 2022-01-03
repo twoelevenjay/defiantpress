@@ -62,6 +62,8 @@ require DEFIANTPRESS_PATH . 'dependencies/Goutte/vendor/autoload.php';
 require DEFIANTPRESS_PATH . 'dependencies/Goutte/Goutte/Client.php';
 require DEFIANTPRESS_PATH . 'includes/class-defiantpress.php';
 
+use DefiantPress\DefiantPress;
+
 /**
  * Begins execution of the plugin.
  *

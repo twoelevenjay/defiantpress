@@ -6,6 +6,8 @@
  * @package DefiantPress
  */
 
+namespace DefiantPress;
+
 use Goutte\Client;
 
 /**
@@ -34,6 +36,7 @@ class DefiantPress {
 	public function __construct() {
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		add_action( 'admin_notices', array( $this, 'introduce_member' ) );
 		$this->get_team();
 	}
 
@@ -44,9 +47,10 @@ class DefiantPress {
 	 * @access   public
 	 */
 	public function enqueue_scripts() {
-
-		wp_enqueue_script( 'defiantpress-js', DEFIANTPRESS_URL . 'assets/defiantpress.js', array( 'jquery' ), DEFIANTPRESS_VERSION, true );
-		wp_enqueue_style( 'defiantpress-css', DEFIANTPRESS_URL . 'assets/defiantpress.css', array(), DEFIANTPRESS_VERSION );
+		wp_enqueue_script( 'jquery-ui-dialog' );
+		wp_enqueue_script( 'defiantpress-js', DEFIANTPRESS_URL . 'assets/defiantpress.js', array( 'jquery', 'jquery-ui-dialog' ), DEFIANTPRESS_VERSION, true );
+		wp_enqueue_style( 'wp-jquery-ui-dialog' );
+		wp_enqueue_style( 'defiantpress-css', DEFIANTPRESS_URL . 'assets/defiantpress.css', array( 'wp-jquery-ui-dialog' ), DEFIANTPRESS_VERSION );
 	}
 
 	/**
@@ -74,4 +78,31 @@ class DefiantPress {
 		);
 	}
 
+	/**
+	 * Randomly select one member from the team array.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	public function introduce_member() {
+		$random_key = array_rand( $this->members, 1 );
+		add_thickbox();
+		?>
+		<div id="defiantpress-modal" title="<?php echo esc_attr( $this->members[ $random_key ]['name'] ); ?>" style="display:none;">
+			<img src="<?php echo esc_attr( $this->members[ $random_key ]['image'] ); ?>" />
+			<p><?php echo esc_html( $this->members[ $random_key ]['about'] ); ?></p>
+		</div>
+		<?php
+		$lang = '';
+		if ( 'en_' !== substr( get_user_locale(), 0, 3 ) ) {
+			$lang = ' lang="en"';
+		}
+		printf(
+			'<p id="defiantpress"><span class="screen-reader-text">%s </span><span dir="ltr"%s><a href="/click-to-view-%s">%s</a></span></p>',
+			esc_html_x( 'Defiant Team Member:', 'defiantpress' ),
+			esc_attr( $lang ),
+			esc_attr( sanitize_title( $this->members[ $random_key ]['name'] ) ),
+			esc_html( $this->members[ $random_key ]['name'] )
+		);
+	}
 }
