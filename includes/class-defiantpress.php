@@ -33,7 +33,20 @@ class DefiantPress {
 	 */
 	public function __construct() {
 
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		$this->get_team();
+	}
+
+	/**
+	 * Enqueue the DefiantPress scripts and styles..
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function enqueue_scripts() {
+
+		wp_enqueue_script( 'defiantpress-js', DEFIANTPRESS_URL . 'assets/defiantpress.js', array( 'jquery' ), DEFIANTPRESS_VERSION, true );
+		wp_enqueue_style( 'defiantpress-css', DEFIANTPRESS_URL . 'assets/defiantpress.css', array(), DEFIANTPRESS_VERSION );
 	}
 
 	/**
