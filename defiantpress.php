@@ -3,7 +3,7 @@
  * The plugin init file.
  *
  * @package DefiantPress
- * @version 1.7.2
+ * @version 1.0.0
  *
  * Plugin Name: DefiantPress
  * Plugin URI:  https://github.com/twoelevenjay/defiantpress
@@ -19,3 +19,16 @@
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
+
+/**
+ * Currently plugin version.
+ */
+define( 'DEFIANTPRESS_VERSION', time() /*'1.0.0'*/ );
+/**
+ * Plugin directory URL.
+ */
+define( 'DEFIANTPRESS_URL', plugin_dir_url( __FILE__ ) );
+/**
+ * Plugin directory path.
+ */
+define( 'DEFIANTPRESS_PATH', plugin_dir_path( __FILE__ ) );
