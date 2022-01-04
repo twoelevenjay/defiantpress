@@ -11,6 +11,7 @@ jQuery(document).ready(function ($) {
 	});
 	$(".click-to-view-tutorial").on("click", function (e) {
 		e.preventDefault();
+		$("#defiantpress-modal").dialog('close');
 		tutorial();
 	});
 	$("body").on("click", ".click-to-close", function (e) {
