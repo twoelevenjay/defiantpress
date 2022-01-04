@@ -41,7 +41,7 @@ define( 'DEFIANTPRESS_PATH', plugin_dir_path( __FILE__ ) );
  * Set transient used for conditionally showing welcome tutorial on plugin activation.
  */
 function add_welcome_transient() {
-	set_transient( 'defiantpress_welcome_message', 'unviewed' );
+	set_transient( 'defiantpress_welcome_message', array() );
 }
 
 /**

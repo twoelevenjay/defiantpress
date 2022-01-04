@@ -21,6 +21,10 @@ body.tutorial-open {
 	color     : #2271b1;
 }
 
+.tutorial-open .click-to-view-tutorial {
+	display: none;
+}
+
 div[aria-describedby="defiantpress-modal"] {
 	border: 10px solid #000000;
 }

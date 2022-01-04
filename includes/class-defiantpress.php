@@ -36,6 +36,8 @@ class DefiantPress {
 	public function __construct() {
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		add_action( 'wp_ajax_dismiss_tutorial', array( $this, 'dismiss_tutorial' ) );
+		add_action( 'wp_ajax_nopriv_dismiss_tutorial', array( $this, 'dismiss_tutorial' ) );
 		add_action( 'admin_notices', array( $this, 'introduce_member' ) );
 		$this->get_team();
 	}
@@ -52,10 +54,53 @@ class DefiantPress {
 		wp_enqueue_style( 'wp-jquery-ui-dialog' );
 		wp_enqueue_style( 'defiantpress-css', DEFIANTPRESS_URL . 'assets/defiantpress.css', array( 'wp-jquery-ui-dialog' ), DEFIANTPRESS_VERSION );
 		$data = array(
-			'viewed' => get_transient( 'defiantpress_welcome_message' ),
+			'viewed' => in_array( get_current_user_id(), get_transient( 'defiantpress_welcome_message' ), true ) ? 'viewed' : 'unviewed',
 			'ajax'   => admin_url( 'admin-ajax.php' ),
 		);
 		wp_localize_script( 'defiantpress-js', 'defiantpress', $data );
+	}
+
+	/**
+	 * Randomly select one member from the team array.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	public function dismiss_tutorial() {
+		$viewed          = get_transient( 'defiantpress_welcome_message' );
+		$current_user_id = get_current_user_id();
+		if ( ! in_array( $current_user_id, $viewed, true ) ) {
+			$viewed[] = $current_user_id;
+		}
+		set_transient( 'defiantpress_welcome_message', $viewed );
+	}
+
+	/**
+	 * Randomly select one member from the team array.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	public function introduce_member() {
+		$random_key = array_rand( $this->members, 1 );
+		add_thickbox();
+		?>
+		<div id="defiantpress-modal" title="<?php echo esc_attr( $this->members[ $random_key ]['name'] ); ?>" style="display:none;">
+			<img src="<?php echo esc_attr( $this->members[ $random_key ]['image'] ); ?>" />
+			<p><?php echo esc_html( $this->members[ $random_key ]['about'] ); ?></p>
+		</div>
+		<?php
+		$lang = '';
+		if ( 'en_' !== substr( get_user_locale(), 0, 3 ) ) {
+			$lang = ' lang="en"';
+		}
+		printf(
+			'<p id="defiantpress"><span class="screen-reader-text">%s </span><span dir="ltr"%s><a class="click-to-view" href="/click-to-view-%s">%s</a></span> <a class="click-to-view-tutorial" href="/click-to-view-tutorial"><span class="dashicons dashicons-info"></span></a></p>',
+			esc_html_x( 'Defiant Team Member:', 'defiantpress' ),
+			esc_attr( $lang ),
+			esc_attr( sanitize_title( $this->members[ $random_key ]['name'] ) ),
+			esc_html( $this->members[ $random_key ]['name'] )
+		);
 	}
 
 	/**
@@ -81,43 +126,5 @@ class DefiantPress {
 				);
 			}
 		);
-	}
-
-	/**
-	 * Randomly select one member from the team array.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	public function introduce_member() {
-		$random_key = array_rand( $this->members, 1 );
-		add_thickbox();
-		?>
-		<div id="defiantpress-modal" title="<?php echo esc_attr( $this->members[ $random_key ]['name'] ); ?>" style="display:none;">
-			<img src="<?php echo esc_attr( $this->members[ $random_key ]['image'] ); ?>" />
-			<p><?php echo esc_html( $this->members[ $random_key ]['about'] ); ?></p>
-		</div>
-		<?php
-		$lang = '';
-		if ( 'en_' !== substr( get_user_locale(), 0, 3 ) ) {
-			$lang = ' lang="en"';
-		}
-		printf(
-			'<p id="defiantpress"><span class="screen-reader-text">%s </span><span dir="ltr"%s><a href="/click-to-view-%s">%s</a></span></p>',
-			esc_html_x( 'Defiant Team Member:', 'defiantpress' ),
-			esc_attr( $lang ),
-			esc_attr( sanitize_title( $this->members[ $random_key ]['name'] ) ),
-			esc_html( $this->members[ $random_key ]['name'] )
-		);
-	}
-
-	/**
-	 * Randomly select one member from the team array.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	public function maybe_show_tutorial() {
-
 	}
 }
