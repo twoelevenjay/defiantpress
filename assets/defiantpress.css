@@ -1,3 +1,8 @@
+body.tutorial-open {
+	height    : 100vh;
+	overflow-y: hidden;
+}
+
 #defiantpress {
 	float      : right;
 	padding    : 5px 10px;
@@ -10,6 +15,16 @@
 	text-decoration: none;
 }
 
+#defiantpress a:focus {
+	outline   : 0;
+	box-shadow: none;
+	color     : #2271b1;
+}
+
+div[aria-describedby="defiantpress-modal"] {
+	border: 10px solid #000000;
+}
+
 #defiantpress-modal {
 	max-width: 100%;
 	width    : 700px;
@@ -20,4 +35,65 @@
 	max-width: 100%;
 	width    : 100%;
 	height   : auto;
+}
+
+.defiantpress-tutorial {
+	position      : absolute;
+	top           : 0;
+	right         : 0;
+	bottom        : 0;
+	left          : 0;
+	pointer-events: none;
+	z-index       : 100000;
+}
+
+.defiantpress-tutorial > div {
+	position        : absolute;
+	background-color: rgba(0,0,0,0.8);
+	pointer-events  : all;
+}
+
+.defiantpress-tutorial .one {
+	top    : 0;
+	right  : 50%;
+	bottom : 50%;
+	left   : 0;
+	z-index: 100001;
+}
+
+.defiantpress-tutorial .two {
+	top    : 0;
+	right  : 0;
+	bottom : 50%;
+	left   : 50%;
+	z-index: 100002;
+}
+
+.defiantpress-tutorial .three {
+	top    : 50%;
+	right  : 0;
+	bottom : 0;
+	left   : 50%;
+	z-index: 100003;
+}
+
+.defiantpress-tutorial .four {
+	top    : 50%;
+	right  : 50%;
+	bottom : 0;
+	left   : 0;
+	z-index: 100004;
+}
+
+.defiantpress-tutorial .message {
+	mix-blend-mode  : multiply;
+	text-align      : center;
+	color           : #000000;
+	background-color: #f0f6fc;
+	padding         : 25px;
+	border-radius   : 11px;
+	position        : absolute;
+	box-shadow      : 10px 10px #72aee6;
+	z-index         : 100005;
+	max-width       : 500px;
 }

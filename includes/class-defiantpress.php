@@ -51,6 +51,11 @@ class DefiantPress {
 		wp_enqueue_script( 'defiantpress-js', DEFIANTPRESS_URL . 'assets/defiantpress.js', array( 'jquery', 'jquery-ui-dialog' ), DEFIANTPRESS_VERSION, true );
 		wp_enqueue_style( 'wp-jquery-ui-dialog' );
 		wp_enqueue_style( 'defiantpress-css', DEFIANTPRESS_URL . 'assets/defiantpress.css', array( 'wp-jquery-ui-dialog' ), DEFIANTPRESS_VERSION );
+		$data = array(
+			'viewed' => get_transient( 'defiantpress_welcome_message' ),
+			'ajax'   => admin_url( 'admin-ajax.php' ),
+		);
+		wp_localize_script( 'defiantpress-js', 'defiantpress', $data );
 	}
 
 	/**
@@ -104,5 +109,15 @@ class DefiantPress {
 			esc_attr( sanitize_title( $this->members[ $random_key ]['name'] ) ),
 			esc_html( $this->members[ $random_key ]['name'] )
 		);
+	}
+
+	/**
+	 * Randomly select one member from the team array.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	public function maybe_show_tutorial() {
+
 	}
 }
